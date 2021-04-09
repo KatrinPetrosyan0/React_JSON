@@ -1,17 +1,53 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React, { Component } from "react";
+import { render } from "react-dom";
+import Demo1 from "./Demo1";
+import Demo2 from "./Demo2";
+class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      name: "React",
+      showHideDemo1: false,
+      showHideDemo2: false,
+    };
+    this.hideComponent = this.hideComponent.bind(this);
+  }
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+  hideComponent(name) {
+    console.log(name);
+    switch (name) {
+      case "showHideDemo1":
+        this.setState({ showHideDemo1: !this.state.showHideDemo1 });
+        break;
+      case "showHideDemo2":
+        this.setState({ showHideDemo2: !this.state.showHideDemo2 });
+        break;
+      default:
+    }
+  }
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+  render() {
+    const { showHideDemo1, showHideDemo2 } = this.state;
+    return (
+      <div>
+        {showHideDemo1 && <Demo1 />}
+        <hr />
+        {showHideDemo2 && <Demo2 />}
+        <hr />
+      
+        <div>
+          <button onClick={() => this.hideComponent("showHideDemo1")}>
+            Click to show/hide Demo1 component
+          </button>
+          
+          <button onClick={() => this.hideComponent("showHideDemo2")}>
+            Click to show/hide Demo2 component
+          </button>
+
+        </div>
+      </div>
+    );
+  }
+}
+
+render(<App />, document.getElementById("root"));
